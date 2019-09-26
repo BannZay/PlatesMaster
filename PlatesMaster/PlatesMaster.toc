@@ -1,0 +1,7 @@
+## Interface: 30300
+## Title: PlatesMaster
+## Author: BannZay
+## Version: 1.0
+## DefaultState: Enabled
+
+PlatesMaster.lua

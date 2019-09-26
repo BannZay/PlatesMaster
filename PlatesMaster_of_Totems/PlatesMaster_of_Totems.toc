@@ -1,0 +1,8 @@
+## Interface: 30300
+## Title: PlatesMaster_of_Totems
+## Author: BannZay
+## Version: 1.0
+## DefaultState: Enabled
+## Dependencies: PlatesMaster
+
+PlatesMaster_of_Totems.lua
