@@ -1,0 +1,11 @@
+## Interface: 30300
+## Title: PlatesMaster_of_Purity
+## Author: BannZay
+## Version: 1.0
+## DefaultState: Enabled
+## Dependencies: PlatesMaster
+
+PlatesMaster_of_Purity.lua
+localization\core.lua
+localization\enUS.lua
+localization\ruRU.lua

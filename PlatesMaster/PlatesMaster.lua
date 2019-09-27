@@ -3,6 +3,7 @@
 PlatesMaster = {}
 PlatesMaster.Localizations = {}
 EventHandlers = {}
+Initializers = {}
 
 local function OnEvent(self, event, ...)
 	if PlatesMaster[event] ~= nil then
@@ -133,8 +134,9 @@ end
 
 
 function PlatesMaster:Init()
-	PlatesMaster:IgnoreName("Venomous Snake")
-	PlatesMaster:IgnoreName("Штормградский стражник")
+	for i = 1, #Initializers do
+		Initializers[i]()
+	end
 end
 
 function PlatesMaster:IsTracking(name)
@@ -163,6 +165,10 @@ end
 function PlatesMaster:PLAYER_ENTERING_WORLD(...)
 	PlatesMaster:Init()
 	PlatesMaster.Frame:SetScript("OnUpdate", PlatesMaster.OnUpdate)
+end
+
+function PlatesMaster:AddInitializer(func)
+	table.insert(Initializers, func)
 end
 
 function PlatesMaster:AddEventHandler(eventName, func)

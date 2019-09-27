@@ -25,6 +25,7 @@ local petImages =
 {
 	["Succubus"] = "spell_shadow_summonsuccubus",
 	["Felhunter"] = "spell_shadow_summonfelhunter",
+	["Felguard"] = "spell_shadow_summonfelguard",
 }
 
 local function Find(tbl, filter)
@@ -107,7 +108,6 @@ local function ScanEveryone()
 			NewPetAppeared(pet)
 		end
 	end
-	
 end
 
 local function Init()
@@ -120,4 +120,4 @@ local function Init()
 	ScanEveryone()
 end
 
-hooksecurefunc(PlatesMaster, "Init", Init)
+PlatesMaster:AddInitializer(Init)

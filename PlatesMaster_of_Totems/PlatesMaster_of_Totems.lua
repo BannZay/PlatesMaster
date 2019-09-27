@@ -23,13 +23,13 @@ local totemIds =
 	16190
 }
 
-local function Init(self)
+local function Init()
 	for i = 1, #totemIds do
 		local info = {GetSpellInfo(totemIds[i])}
 		local name = info[1]
 		local texture = info[3]
-		self:TrackName(name, texture, 0, -10, true)
+		PlatesMaster:TrackName(name, texture, 0, -10, true)
 	end
 end
 
-hooksecurefunc(PlatesMaster, "Init", Init)
+PlatesMaster:AddInitializer(Init)
