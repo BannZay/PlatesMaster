@@ -58,10 +58,12 @@ local function Print(text)
 	end
 end
 
-local once = false
 local function UpdateObjects(hp)
 	frame = hp:GetParent()
 	local threat, hpborder, cbshield, cbborder, cbicon, overlay, oldname, level, bossicon, raidicon, elite = frame:GetRegions()
+	
+	if (oldname == nil) then return end -- nameplates were modified by another addon. Looks like we giving up here
+	
 	local name = oldname:GetText()
 	
 	local textureInfo, foundName = Find(Targets, function(x, trackingName) return StartsWith(name, trackingName) end)
@@ -76,6 +78,10 @@ local function UpdateObjects(hp)
 		
 		if frame.customTexture then frame.customTexture:Hide() end
 	else
+		if frame.customTexture then 
+			frame.customTexture:Hide()
+		end
+	
 		overlay:SetAlpha(0)
 		threat:Hide()
 		oldname:Hide()
@@ -83,25 +89,26 @@ local function UpdateObjects(hp)
 		hpborder:Hide()
 		hp:SetAlpha(0)
 		
-		if textureInfo ~= nil and textureInfo.texture ~= "" then
-			if (not textureInfo.hideHpBar) then
-				hp:SetAlpha(1)
-			end
-			
-			if not frame.customTexture then
-				frame.customTexture = frame:CreateTexture(nil, "BACKGROUND")
-				frame.customTexture:ClearAllPoints()
-				frame.customTexture:SetPoint("CENTER",frame,"CENTER", textureInfo.xOfs, textureInfo.yOfs)
+		if textureInfo ~= nil then
+			if textureInfo.texture ~= "" then
+				if (not textureInfo.hideHpBar) then
+					hp:SetAlpha(1)
+				end
+							
+				if not frame.customTexture then
+					frame.customTexture = frame:CreateTexture(nil, "BACKGROUND")
+					frame.customTexture:SetAllPoints()
+					frame.customTexture:SetAlpha(0.6)
+					
+					frame.customTexture:ClearAllPoints()
+					frame.customTexture:SetPoint("CENTER",frame,"CENTER", textureInfo.xOfs, textureInfo.yOfs)
+					frame.customTexture:SetWidth(32)
+					frame.customTexture:SetHeight(32)
+				end
 				
-				frame.customTexture:SetWidth(32)
-				frame.customTexture:SetHeight(32)
-			else
 				frame.customTexture:Show()
+				frame.customTexture:SetTexture(textureInfo.texture)
 			end
-			
-			frame.customTexture:SetTexture(textureInfo.texture)
-		elseif frame.customTexture then 
-			frame.customTexture:Hide()
 		end
 	end
 end
@@ -112,6 +119,9 @@ local function SkinObjects(frame)
 
    HealthBar:HookScript("OnShow", UpdateObjects)
    HealthBar:HookScript("OnSizeChanged", UpdateObjects)
+   
+   frame:SetScript('OnEnter', function() print("123") end)
+   frame:SetScript('OnLeave', function() end)
 
    UpdateObjects(HealthBar)
    Nameplates[frame] = true
@@ -144,7 +154,7 @@ function PlatesMaster:IsTracking(name)
 end
 
 function PlatesMaster:IgnoreName(name)
-	Targets[name] = { texture = "" }
+	Targets[name] = { texture = ""}
 end
 
 function PlatesMaster:RemoveName(name)
