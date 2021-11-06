@@ -98,7 +98,7 @@ local function UpdateObjects(hp)
 				if not frame.customTexture then
 					frame.customTexture = frame:CreateTexture(nil, "BACKGROUND")
 					frame.customTexture:SetAllPoints()
-					frame.customTexture:SetAlpha(0.6)
+					frame.customTexture:SetAlpha(0.9)
 					
 					frame.customTexture:ClearAllPoints()
 					frame.customTexture:SetPoint("CENTER",frame,"CENTER", textureInfo.xOfs, textureInfo.yOfs)
