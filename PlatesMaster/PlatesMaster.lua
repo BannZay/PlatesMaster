@@ -81,24 +81,31 @@ local function UpdateObjects(hp)
 		if frame.customTexture then 
 			frame.customTexture:Hide()
 		end
-	
+		
 		overlay:SetAlpha(0)
 		threat:Hide()
-		oldname:Hide()
 		level:Hide()
-		hpborder:Hide()
-		hp:SetAlpha(0)
+		
+		if (textureInfo.hideHpBar) then
+			hpborder:Hide()
+			hp:SetAlpha(0)
+		end
+		
+		if textureInfo.newName ~= nil then
+			oldname:SetText(textureInfo.newName)
+		else
+			oldname:Hide()
+		end
 		
 		if textureInfo ~= nil then
 			if textureInfo.texture ~= "" then
-				if (not textureInfo.hideHpBar) then
-					hp:SetAlpha(1)
-				end
+				
 							
 				if not frame.customTexture then
-					frame.customTexture = frame:CreateTexture(nil, "BACKGROUND")
+					frame.customTexture = frame:CreateTexture(nil, "ARTWORK")
+					frame:SetFrameStrata("HIGH")
 					frame.customTexture:SetAllPoints()
-					frame.customTexture:SetAlpha(0.9)
+					frame.customTexture:SetAlpha(1)
 					
 					frame.customTexture:ClearAllPoints()
 					frame.customTexture:SetPoint("CENTER",frame,"CENTER", textureInfo.xOfs, textureInfo.yOfs)
@@ -161,8 +168,8 @@ function PlatesMaster:RemoveName(name)
 	Targets[name] = nil
 end
 
-function PlatesMaster:TrackName(name, texture, xOfs, yOfs, hideHpBar)
-	Targets[name] = { texture = texture, xOfs = xOfs, yOfs = yOfs, hideHpBar = hideHpBar }
+function PlatesMaster:TrackName(name, texture, xOfs, yOfs, hideHpBar, newName)
+	Targets[name] = { texture = texture, xOfs = xOfs, yOfs = yOfs, hideHpBar = hideHpBar, newName = newName }
 end
 
 function PlatesMaster:OnUpdate(self, elapsed)
