@@ -103,7 +103,6 @@ local function UpdateObjects(hp)
 							
 				if not frame.customTexture then
 					frame.customTexture = frame:CreateTexture(nil, "ARTWORK")
-					frame:SetFrameStrata("HIGH")
 					frame.customTexture:SetAllPoints()
 					frame.customTexture:SetAlpha(1)
 					
